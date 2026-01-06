@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, type ChangeEvent, type FormEvent } from "react";
 
 const WEBHOOK_URL = "https://example.com/webhook"; // Mock webhook URL
 
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+}
+
 export default function LeadCaptureForm() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     phone: "",
@@ -11,7 +17,7 @@ export default function LeadCaptureForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handlePhoneChange = (e) => {
+  const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, ""); // Remove non-digits
 
     // Truncate to 10 digits
@@ -32,21 +38,33 @@ export default function LeadCaptureForm() {
     setFormData((prev) => ({ ...prev, phone: formattedValue }));
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name !== "phone") {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      // Mock API call
+      // Mocked Webhook Style Submission
+      // In a production environment, this would be a fetch call to your backend or webhook URL
+      console.log("Initiating dynamic webhook submission...");
+      console.log("Payload:", JSON.stringify(formData, null, 2));
+      console.log("Target:", WEBHOOK_URL);
+
+      // Simulate network request latency
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      console.log("Form submitted to:", WEBHOOK_URL, formData);
+
+      // Simulate successful webhook response
+      // const response = await fetch(WEBHOOK_URL, {
+      //   method: 'POST',
+      //   body: JSON.stringify(formData)
+      // });
+
       setIsSuccess(true);
     } catch (error) {
       console.error("Submission error:", error);

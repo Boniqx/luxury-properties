@@ -1,5 +1,5 @@
 ---
-import LeadCaptureForm from "../components/LeadCaptureForm.jsx";
+import LeadCaptureForm from "../components/LeadCaptureForm.tsx";
 import "../styles/global.css";
 import { Image, getImage } from "astro:assets";
 import heroBg from "../assets/hero-bg.png";
@@ -97,7 +97,7 @@ const optimizedTexture = await getImage({
         style={`background-image: url('${optimizedTexture.src}'); background-size: cover;`}
       >
         <div class="w-full max-w-md">
-          <LeadCaptureForm />
+          <LeadCaptureForm client:load />
         </div>
 
         <div class="absolute bottom-6 right-6 text-gray-300 text-xs">
