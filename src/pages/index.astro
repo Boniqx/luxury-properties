@@ -1,6 +1,23 @@
 ---
 import LeadCaptureForm from "../components/LeadCaptureForm.jsx";
 import "../styles/global.css";
+import { Image, getImage } from "astro:assets";
+import heroBg from "../assets/hero-bg.png";
+import textureBg from "../assets/texture-bg.png";
+import "@fontsource/inter/300.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/playfair-display/400.css";
+import "@fontsource/playfair-display/400-italic.css";
+import "@fontsource/playfair-display/600.css";
+import "@fontsource/playfair-display/700.css";
+
+const optimizedTexture = await getImage({
+  src: textureBg,
+  format: "webp",
+  width: 412,
+  height: 412,
+});
 ---
 
 <html lang="en">
@@ -9,15 +26,11 @@ import "../styles/global.css";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>Luxury Off-Market Real Estate</title>
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
-      rel="stylesheet"
+    <meta
+      name="description"
+      content="Unlock exclusive off-market luxury real estate listings. Gain priority access to premium properties before they hit the public market."
     />
+    <title>Luxury Off-Market Real Estate</title>
   </head>
   <body class="font-sans antialiased bg-[#0F172A]">
     <div class="min-h-screen flex flex-col lg:flex-row">
@@ -27,10 +40,14 @@ import "../styles/global.css";
       >
         <!-- Background Image with Overlay -->
         <div class="absolute inset-0 z-0">
-          <img
-            src="/assets/hero-bg.png"
+          <Image
+            src={heroBg}
             alt="Luxury Modern Home"
             class="w-full h-full object-cover"
+            fetchpriority="high"
+            width={412}
+            height={412}
+            loading="eager"
           />
           <div class="absolute inset-0 bg-[#0F172A]/80 mixed-blend-multiply">
           </div>
@@ -48,10 +65,7 @@ import "../styles/global.css";
 
           <h1 class="text-4xl lg:text-6xl font-serif mb-6 leading-tight">
             Unlock Exclusive <br />
-            <span
-              class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400"
-              >Off-Market Listings</span
-            >
+            <span>Off-Market Listings</span>
           </h1>
 
           <p
@@ -80,11 +94,10 @@ import "../styles/global.css";
       <!-- Right Side: Lead Capture Form -->
       <div
         class="w-full lg:w-1/2 bg-[#FDFCF8] flex items-center justify-center p-8 lg:p-12 relative"
-        style="background-image: url('/assets/texture-bg.png'); background-size: cover;"
+        style={`background-image: url('${optimizedTexture.src}'); background-size: cover;`}
       >
         <div class="w-full max-w-md">
-          <!-- React Component Island -->
-          <LeadCaptureForm client:visible />
+          <LeadCaptureForm />
         </div>
 
         <div class="absolute bottom-6 right-6 text-gray-300 text-xs">
